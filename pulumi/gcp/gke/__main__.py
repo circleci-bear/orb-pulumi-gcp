@@ -6,6 +6,7 @@ from pulumi_kubernetes.apps.v1 import Deployment
 from pulumi_kubernetes.core.v1 import Namespace, Pod, Service
 from pulumi_gcp import container
 
+
 conf = pulumi.Config('gke')
 gcp_conf = pulumi.Config('gcp')
 
