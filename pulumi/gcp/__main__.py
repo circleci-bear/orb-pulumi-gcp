@@ -24,7 +24,7 @@ if 'CIRCLE_SHA1' in os.environ:
 else:
     image_tag = 'latest'
 
-docker_image = 'circleci-bear/orb-pulumi-gcp:{0}'.format(image_tag)
+docker_image = 'circlecibear/orb-pulumi-gcp:{0}'.format(image_tag)
 
 machine_type = 'g1-small'
 
