@@ -59,7 +59,7 @@ jobs:
             gcloud auth activate-service-account --key-file ${HOME}/project/pulumi/gcp/gke/cicd_demo_gcp_creds.json
       - pulumi/update:
           stack: orb-pulumi-gcp
-          working_directory: ${HOME}/project/pulumi/gcp/gke/
+          working_directory: ${HOME}/project/pulumi/gcp
       - run:
           name: Run Smoke Test against GKE
           command: |
