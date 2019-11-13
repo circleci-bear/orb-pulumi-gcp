@@ -36,7 +36,7 @@ jobs:
             source $BASH_ENV
             docker build -t $DOCKER_LOGIN/$IMAGE_NAME -t $DOCKER_LOGIN/$IMAGE_NAME:$TAG .
       - snyk/scan:
-          fail-on-issues: true
+          fail-on-issues: false
           monitor-on-build: true
           docker-image-name: $DOCKER_LOGIN/$IMAGE_NAME:$TAG
           target-file: "Dockerfile"
