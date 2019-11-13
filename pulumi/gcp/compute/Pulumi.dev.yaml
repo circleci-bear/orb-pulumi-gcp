@@ -1,6 +1,0 @@
-config:
-  compute:name: dev
-  gcp:credentials: ./cicd_demo_gcp_creds.json
-  gcp:project: bear-orb-pulumi-gcp
-  gcp:region: us-east1
-  gcp:zone: us-east1-d

@@ -1,3 +1,0 @@
-name: compute
-runtime: python
-description: Deploys App to Google Cloud Platform
