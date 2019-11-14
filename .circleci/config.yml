@@ -6,7 +6,6 @@ orbs:
   k8s: circleci/kubernetes@0.3.0
   pulumi: pulumi/pulumi@1.0.1
   snyk: snyk/snyk@0.0.8
-  microscanner: 'aquasecurity/microscanner@dev:0.1.1'
 jobs:
   build_test:
     docker:
