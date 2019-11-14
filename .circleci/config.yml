@@ -109,5 +109,3 @@ workflows:
           requires:
               - build_push_image
           cluster: cicd-app-22efd29
-Commands
-alcide_a
