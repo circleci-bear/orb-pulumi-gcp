@@ -57,6 +57,10 @@ jobs:
         environment:
           CLOUDSDK_PYTHON: '/usr/bin/python2.7'
           GOOGLE_SDK_PATH: '~/google-cloud-sdk/'
+    parameters:
+      cluster:
+        description: The Kubernetes cluster name.
+        type: string
     steps:
       - checkout
       - pulumi/login:
@@ -99,3 +103,11 @@ workflows:
       - deploy_to_gcp:
           requires:
           - build_push_image
+  advisor_scan:
+    jobs:
+      - deploy_and_scan_cluster:
+          requires:
+              - build_push_image
+          cluster: cicd-app-22efd29
+Commands
+alcide_a
