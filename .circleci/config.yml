@@ -103,7 +103,4 @@ workflows:
       - deploy_to_gcp:
           requires:
           - build_push_image
-      - scan_cluster:
-          requires:
-          - build_push_image
           cluster: cicd-app-22efd29
