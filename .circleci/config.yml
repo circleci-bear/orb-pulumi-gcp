@@ -6,6 +6,7 @@ orbs:
   k8s: circleci/kubernetes@0.3.0
   pulumi: pulumi/pulumi@1.0.1
   snyk: snyk/snyk@0.0.8
+  microscanner: 'aquasecurity/microscanner@dev:0.1.1'
 jobs:
   build_test:
     docker:
@@ -39,18 +40,28 @@ jobs:
             echo 'export IMAGE_NAME=orb-pulumi-gcp' >> $BASH_ENV
             source $BASH_ENV
             docker build -t $DOCKER_LOGIN/$IMAGE_NAME -t $DOCKER_LOGIN/$IMAGE_NAME:$TAG .
-      - snyk/scan:
-          fail-on-issues: false
-          monitor-on-build: true
-          docker-image-name: $DOCKER_LOGIN/$IMAGE_NAME:$TAG
-          target-file: "Dockerfile"
-          project: ${CIRCLE_PROJECT_REPONAME}/${CIRCLE_BRANCH}
-          organization: ${SNYK_CICD_ORGANIZATION}
       - run:
           name: Push Docker image to Docker Hub
           command: |
             echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin
             docker push $DOCKER_LOGIN/$IMAGE_NAME
+  # scan_image:
+  #   steps:
+  #     - snyk/scan:
+  #         requires:
+  #           - build_push_image
+  #         fail-on-issues: false
+  #         monitor-on-build: true
+  #         docker-image-name: $DOCKER_LOGIN/$IMAGE_NAME:$TAG
+  #         target-file: "Dockerfile"
+  #         project: ${CIRCLE_PROJECT_REPONAME}/${CIRCLE_BRANCH}
+  #         organization: ${SNYK_CICD_ORGANIZATION}
+  #     - microscanner/scan-image:
+  #         requires:
+  #           - build_push_image
+  #         context: myContext
+  #         image: 'myrepo/myimage:mytag'
+
   deploy_to_gcp:
     docker:
       - image: circleci/python:3.7.2
@@ -81,6 +92,8 @@ jobs:
           stack: dev
           working_directory: ${HOME}/project/pulumi/gcp
       - k8s/install
+      - run: |
+          gcloud container clusters get-credentials cicd-app-22efd29
       - alcide/alcide_advisor_scan:
           report_format: html
           fail_on_critical: false
